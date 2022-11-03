@@ -126,7 +126,7 @@ const OnBoarding = ({navigation}) => {
                     borderBottomLeftRadius: 30,
                     backgroundColor: COLORS.blue,
                 }}
-                onPress={()=> navigation.navigate("Login") }>
+                onPress={()=> navigation.replace("Login") }>
                 <Text style={{...FONTS.h1, color:COLORS.white}}>{completed ? "Begin":"Skip"}</Text>
             </TouchableOpacity>
           </View>

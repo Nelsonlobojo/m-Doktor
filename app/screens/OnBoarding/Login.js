@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, StatusBar} from "react-native";
 
+import NewsItemContainer from "../NewsItems/NewsContainer";
+
 const Login = () => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#0682FE" />
-            <Text>Login</Text>
+            <NewsItemContainer />
         </View>
     )
 }

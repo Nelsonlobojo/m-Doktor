@@ -9,7 +9,7 @@ const morgan = require('morgan');
 dotenv.config();
 const api = process.env.API_URL;
 
-// Routes
+// Routers
 const doctorRouter = require('./routers/doctor');
 const specialityRouter = require('./routers/speciality');
 const userRouter = require('./routers/user');
@@ -21,21 +21,30 @@ const onlineCallRouter = require('./routers/onlineCall');
 const reviewRouter = require('./routers/review');
 const videoRouter = require('./routers/video');
 const chatRouter = require('./routers/chat'); 
+const categoryRouter = require('./routers/category');
+const authJwt = require('./helpers/jwt');
+const errorHandler = require('./helpers/error-handler');
 
 // Middleware
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+app.use(authJwt());
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
+app.use(errorHandler);
+
+// Routes
 app.use(`${api}/doctors`, doctorRouter);
 app.use(`${api}/specialities`, specialityRouter);
 app.use(`${api}/users`, userRouter);
+app.use(`${api}/categories`, categoryRouter);
 app.use(`${api}/appointments`, appointmentRouter);
-app.use(`${api}/medicalRecords`, medicalRecordRouter);
+/*app.use(`${api}/medicalRecords`, medicalRecordRouter);
 app.use(`${api}/newsItems`, newsItemRouter);
 app.use(`${api}/offlineCalls`, offlineCallRouter);
 app.use(`${api}/onlineCalls`, onlineCallRouter);
 app.use(`${api}/reviews`, reviewRouter);
 app.use(`${api}/videos`, videoRouter);
-app.use(`${api}/chats`, chatRouter);
+app.use(`${api}/chats`, chatRouter);*/
 
 
 // Database connection

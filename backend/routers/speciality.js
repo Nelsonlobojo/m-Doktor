@@ -1,6 +1,7 @@
 const {Speciality} = require('../models/speciality');
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 router.get(`/`, async (req, res) => {
     const specialityList = await Speciality.find();
@@ -35,6 +36,10 @@ router.post(`/`, async (req, res) => {
 });
 
 router.put(`/:id`, async (req, res) => {
+
+    if(!mongoose.isValidObjectId(req.params.id)) {
+        res.status(400).send('Invalid Speciality Id');
+    }
     const speciality = await Speciality.findByIdAndUpdate(
         req.params.id,
         {

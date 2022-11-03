@@ -28,44 +28,29 @@ const doctorSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
-        default: ''
+        default: '',
+        required: true
     },
     profilePicture: {
         type: String,
-        default: ''
+        default: '',
+        required: true
     },
     price: {
         type: Number,
         required: true
     },
-    rating: {
-        type: Number,
-        default: 0
-    },
-    reviews: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Review'
-    }],
-    numberOfReviews: {
-        type: Number,
-        default: 0
-    },
-    appointments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Appointment'
-    }],
-    numberOfAppointments: {
-        type: Number,
-        default: 0
-    },
-    isFeatured: {
-        type: Boolean,
-        default: false
-    },
     isVerified: {
         type: Boolean,
         default: false
     }
+});
+
+doctorSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+doctorSchema.set('toJSON', {
+    virtuals: true
 });
 
 module.exports = mongoose.model('Doctor', doctorSchema);
