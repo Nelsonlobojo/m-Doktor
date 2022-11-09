@@ -5,7 +5,7 @@ const SharedHeader = () => {
     return (
         <SafeAreaView style ={styles.header}>
             <Image source={require("../assets/images/logo.png")} 
-            style={{width: 150 ,height: 150}} 
+            style={{width: 100 ,height: 100}} 
             resizeMethod="contain"
             />
         </SafeAreaView>
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignContent: "center",
         justifyContent: "center",
-        padding: 20,
+        padding: 0,
     }
 })
 

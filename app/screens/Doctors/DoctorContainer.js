@@ -1,39 +1,38 @@
 import React , {useState, useEffect} from 'react';
 import {StyleSheet, View, FlatList, ActivityIndicator,Dimensions} from 'react-native';
+import {useDispatch, useSelector} from "react-redux";
+import { getAllDoctors } from '../../../redux/store/actions/FetchDoctors';
 
-import NewsItemList from './NewsItemList';
+import DoctorList from './DoctorList';
 import SearchBarTheme from '../../shared/SearchBarTheme';
 
 
-const NewsItemContainer = () => {
-    const [newsItems, setNewsItems] = useState([]);
+const DoctorContainer = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
-    
 
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(json => setNewsItems(json))
-
-        return () => {
-            setNewsItems([]);
-        }
-
+        dispatch(getAllDoctors());
     }, []);
+
+    
+    const doctors = useSelector(state => state.doctor.doctors);
 
     const renderItem = ({ item }) => {
         // when no input, show all
         if (searchPhrase === "") {
-          return <NewsItemList  key={item.id} item={item} />;
+          return <DoctorList item={item} />;
         }
         // filter of the title
-        if (item.title.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-          return <NewsItemList  key={item.id} item={item} />;
+        if (item.name.first.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
+          return <DoctorList item={item} />;
         }
+        if (item.name.last.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
+            return <DoctorList item={item} />;
+          }
       };
-
 
   return (
     <View style={styles.container}>
@@ -43,17 +42,15 @@ const NewsItemContainer = () => {
             clicked={clicked}
             setClicked={setClicked}
         />
-        {/*<View><CategoryFilter/></View>*/}
         <View style={styles.listContainer}>
         <FlatList
-            data={newsItems}
+            data={doctors}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
         />
         </View>
      </View> 
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -68,4 +65,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default NewsItemContainer;
+export default DoctorContainer;

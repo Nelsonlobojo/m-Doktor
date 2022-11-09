@@ -1,18 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, StatusBar} from "react-native";
 
-import NewsItemContainer from "../NewsItems/NewsContainer";
+import DoctorContainer from "./DoctorContainer";
 
-const Login = () => {
+const DoctorPage = () => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#0682FE" />
-            <NewsItemContainer />
+            <DoctorContainer />
         </View>
     )
 }
-
-export default Login;
 
 const styles = StyleSheet.create({
     container:{
@@ -21,3 +19,5 @@ const styles = StyleSheet.create({
         alignItems:"center"
     }
 })
+
+export default DoctorPage;

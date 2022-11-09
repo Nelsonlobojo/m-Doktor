@@ -1,15 +1,11 @@
 const {Appointment} = require('../models/appointments');
-const {Category} = require('../models/category');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
 router.get(`/`, async (req, res) => {
-    let filter = {};
-    if(req.query.categories){
-        filter = {category: req.query.categories.split(',')}
-    }
-    const appointmentList = await Appointment.find(filter).populate('user doctor category');
+    
+    const appointmentList = await Appointment.find(filter).populate('user doctor ');
     const userAppointmentList = await Appointment.find().populate('user', 'name phone email profilePicture').sort({'date': 1});
 
     if(!appointmentList) {
@@ -24,7 +20,7 @@ router.get(`/`, async (req, res) => {
 })
 
 router.get(`/:id`, async (req, res) => {
-    const appointment = await Appointment.findById(req.params.id).populate('user doctor category');
+    const appointment = await Appointment.findById(req.params.id).populate('user doctor');
 
     if(!appointment) {
         res.status(500).json({success: false})
@@ -33,14 +29,11 @@ router.get(`/:id`, async (req, res) => {
 })
 
 router.post(`/`, async (req, res) => {
-    const category = await Category.findById(req.body.category);
-    if(!category) return res.status(400).send('Invalid Category');
 
     let appointment = new Appointment({
         doctor: req.body.doctor,
         date: req.body.date,
         time: req.body.time,
-        category: req.body.category,
     })
     appointment = await appointment.save();
 
@@ -51,15 +44,12 @@ router.post(`/`, async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    const category = await Category.findById(req.body.category);
-    if(!category) return res.status(400).send('Invalid Category');
-
+    
     const appointment = await Appointment.findByIdAndUpdate(
         req.params.id,
         {
             date: req.body.date,
             time: req.body.time,
-            category: req.body.category,
         },
         {new: true}
     )
@@ -98,7 +88,7 @@ router.get(`/userappointments/:userid`, async (req, res) => {
     if(req.query.categories){
         filter = {category: req.query.categories.split(',')}
     }
-    const appointmentList = await Appointment.find(filter).populate('user doctor category');
+    const appointmentList = await Appointment.find(filter).populate('user doctor');
     const userAppointmentList = await Appointment.find({user: req.params.userid}).
     populate({path:'doctor', populate:{
         path:'speciality',

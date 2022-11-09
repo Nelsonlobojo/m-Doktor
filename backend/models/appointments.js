@@ -19,11 +19,6 @@ const appointmentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
-    },
     status: {
         type: String,
         required: true,

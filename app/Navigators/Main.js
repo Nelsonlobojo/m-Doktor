@@ -1,27 +1,36 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import NewsItemContainer from "../screens/NewsItems/NewsContainer";
+
+// my Stacks
+import NewsNavigator from "./NewsNavigator";
+import HomeNavigator from "./HomeNavigator";
 
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
     return (
         <Tab.Navigator
-            initialRouteName="Home"
-            tabBarOptions={{
-                keyboardHidesTabBar: true,
-                showLabel: false,
-                activeTintColor: "blue",
+            initialRouteName="Consult"
+            screenOptions={{
+                "tabBarHideOnKeyboard": true,
+                "tabBarActiveTintColor": "blue",
+                tabBarShowLabel: true,
+                headerShown: false,
+                "tabBarStyle": [
+                  {
+                    "display": "flex"
+                  },
+                  null
+                ]
             }}
         >
             <Tab.Screen
-                name="Home"
-                component={NewsItemContainer}
+                name="Consult"
+                component={HomeNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Icon name="home" 
+                        <Icon name="stethoscope"
                         style = {{position: 'relative'}}
                         color={color}
                         size ={30} 
@@ -31,10 +40,10 @@ const Main = () => {
             />
             <Tab.Screen
                 name="Record"
-                component={NewsItemContainer}
+                component={NewsNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
-                        <Icon name="record" 
+                        <Icon name="id-card" 
                         style = {{position: 'relative'}}
                         color={color}
                         size ={30} 
@@ -44,7 +53,7 @@ const Main = () => {
             />
             <Tab.Screen
                 name="Schedule"
-                component={NewsItemContainer}
+                component={NewsNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Icon name="calendar" 
@@ -57,7 +66,7 @@ const Main = () => {
             />
             <Tab.Screen
                 name="News"
-                component={NewsItemContainer}
+                component={NewsNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <Icon name="newspaper-o" 
@@ -71,4 +80,6 @@ const Main = () => {
         </Tab.Navigator>
     );
 }
+
+export default Main;
       

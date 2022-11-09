@@ -2,20 +2,26 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from "@react-navigation/stack";
-// screens
-import {
-    OnBoarding,
-    Login,
-} from "./app/screens/"; 
+import {createStackNavigator} from "@react-navigation/stack";
+import { LogBox } from 'react-native';
+
+
+// Redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
+//Navigators
+import Main from './app/Navigators/Main';
+import OnBoarding from './app/screens/OnBoarding/OnBoarding';
+import SharedHeader from './app/shared/SharedHeader';
+
 
 
 import { useFonts } from 'expo-font';
-import { StatusBar } from 'react-native';
-import SharedHeader from './app/shared/SharedHeader';
+const Stack = createStackNavigator();
+
 
 // screen for stack & tabs
-const Stack = createStackNavigator();
 const App = () => {
     const [loaded] = useFonts({
         "Roboto-Black" : require('./app/assets/fonts/Roboto-Black.ttf'),
@@ -27,16 +33,20 @@ const App = () => {
         return null;
     }
 
+    LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+    LogBox.ignoreAllLogs();//Ignore all log notifications
+    LogBox.ignoreLogs([
+        'Non-serializable values were found in the navigation state',
+      ]);
+
+
     return (
+        <Provider store={store}>
         <NavigationContainer>
-            <StatusBar barStyle="dark-content" backgroundColor="#0682FE" />
-            <Stack.Navigator>
-                {/* Onboarding screen */}
-                <Stack.Screen name="OnBoarding" component={OnBoarding} options={{ headerShown: false }} />
-                <Stack.Screen name="Login" component={Login} options={{ headerTitle: () => <SharedHeader/> }} />
-        
-            </Stack.Navigator>
+          <SharedHeader />  
+          <Main />
         </NavigationContainer>
+        </Provider>
     );
 }
 
