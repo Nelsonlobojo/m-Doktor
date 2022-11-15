@@ -4,11 +4,11 @@ import { StyleSheet, View, Dimensions, Image, Button, Text } from "react-native"
 var  {height,width} = Dimensions.get('window');
 
 const DoctorCard = (props) => {
-    const image = props.picture.large;
-    const firstName = props.name.first;
-    const lastName = props.name.last;
+    const image = props.profilePicture;
+    const name = props.name;
     const email = props.email;
-    const name = firstName + " " + lastName;
+    const speciality = props.speciality;
+    const price = props.price;
     
     return (
         <View style={styles.container}>
@@ -20,9 +20,16 @@ const DoctorCard = (props) => {
             <Text style={styles.name}>
                 {name.length > 15 ? name.substring(0, 15-3) + "..." : name}
             </Text>
-            <Text style={styles.specialty}>
+            <Text style={styles.body}>
                 {email.length > 15 ? email.substring(0, 15-3) + "..." : email}
             </Text>
+            <Text style={styles.body}>
+                {speciality.length > 15 ? speciality.substring(0, 15-3) + "..." : speciality}
+            </Text>
+            <Text style={styles.body}>
+                {price.length > 15 ? price.substring(0, 15-3) + "..." : price}
+            </Text>
+            <Button title="Book" color="#f194ff" />
             <View>
             </View>
         </View>
@@ -62,8 +69,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         left: 0,
     },
-    specialty:{
-
+    body:{
         fontSize: 14,
         color: "grey",
         textAlign: "center",

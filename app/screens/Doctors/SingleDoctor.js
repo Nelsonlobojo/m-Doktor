@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 const SingleDoctor = (props) => {
     const navigation = useNavigation();
     const [doctorItem, setDoctorItem] = useState(props.route.params.item);
-    const {item} = props.route.params;
    
     
     return (
@@ -22,16 +21,20 @@ const SingleDoctor = (props) => {
             <Image
                 style={styles.image}
                 source={{
-                uri: doctorItem.picture.large
-                    ? doctorItem.picture.large
+                uri: doctorItem.profilePicture
+                    ? doctorItem.profilePicture
                     : "https://picsum.photos/200/300",
                 }}
                 resizeMethod="contain"
             />
             </View>
             <View style={styles.contentContainer}>
-            <Text style={styles.name}>{doctorItem.name.first} {doctorItem.name.last}</Text>
-            <Text style={styles.username}>{doctorItem.login.username}</Text>
+            <Text style={styles.name}>{doctorItem.name}</Text>
+            <Text style={styles.body}>{doctorItem.email}</Text>
+            <Text style={styles.body}>{doctorItem.speciality}</Text>
+            <Text style={styles.body}>{doctorItem.price}</Text>
+            <Text style={styles.body}>{doctorItem.phone}</Text>
+            <Text style={styles.username}>{doctorItem.bio}</Text>
             </View>
         </ScrollView>
         <View style={styles.bottomContainer}>

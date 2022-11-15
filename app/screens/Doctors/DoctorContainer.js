@@ -1,24 +1,33 @@
 import React , {useState, useEffect} from 'react';
 import {StyleSheet, View, FlatList, ActivityIndicator,Dimensions} from 'react-native';
-import {useDispatch, useSelector} from "react-redux";
-import { getAllDoctors } from '../../../redux/store/actions/FetchDoctors';
+import { useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
 
 import DoctorList from './DoctorList';
 import SearchBarTheme from '../../shared/SearchBarTheme';
+import baseUrl from '../../common/baseurl';
 
 
 const DoctorContainer = () => {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [clicked, setClicked] = useState(false);
+    const [doctors, setDoctors] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const dispatch = useDispatch();
+   useFocusEffect(
+        React.useCallback(() => {
+            axios.get(`${baseUrl}doctors`)
+            .then(res => {
+                setDoctors(res.data);
+                setLoading(false);
+            })
+            .catch(err => console.log(err));
 
-    useEffect(() => {
-        dispatch(getAllDoctors());
-    }, []);
-
-    
-    const doctors = useSelector(state => state.doctor.doctors);
+            return () => {
+                setDoctors([]);
+            }
+        }, [])
+   )
 
     const renderItem = ({ item }) => {
         // when no input, show all
@@ -35,7 +44,9 @@ const DoctorContainer = () => {
       };
 
   return (
-    <View style={styles.container}>
+    <>
+    {loading == false ? (
+        <View style={styles.container}>
         <SearchBarTheme 
             searchPhrase={searchPhrase}
             setSearchPhrase={setSearchPhrase}
@@ -49,6 +60,13 @@ const DoctorContainer = () => {
         />
         </View>
      </View> 
+    ) : (
+        <View style={[styles.center,{backgroundColor: "#f2f2f2"}]}>
+            <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+    )}
+    </>
+    
     );
 }
 

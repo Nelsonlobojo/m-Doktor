@@ -5,11 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from "@react-navigation/stack";
 import { LogBox } from 'react-native';
 
-
-// Redux
-import { Provider } from 'react-redux';
-import store from './redux/store';
-
 //Navigators
 import Main from './app/Navigators/Main';
 import OnBoarding from './app/screens/OnBoarding/OnBoarding';
@@ -41,12 +36,10 @@ const App = () => {
 
 
     return (
-        <Provider store={store}>
         <NavigationContainer>
           <SharedHeader />  
           <Main />
         </NavigationContainer>
-        </Provider>
     );
 }
 

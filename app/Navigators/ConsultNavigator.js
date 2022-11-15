@@ -14,7 +14,7 @@ function MyTabs()  {
         <Tab.Navigator>
             <Tab.Screen name="Date/Time" component={AppointmentScreen} />
             <Tab.Screen name="Payment" component={Payment} />
-            <Tab.Screen name="Confirm" component={Confirm} />       
+            <Tab.Screen name="Success" component={Confirm} />       
         </Tab.Navigator>
     )
 }
