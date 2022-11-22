@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import {
   View,
   Text,
@@ -13,27 +13,61 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import RNPickerSelect from "react-native-picker-select";
 import { useNavigation } from "@react-navigation/native";
 import DatePicker from "react-native-modern-datepicker";
+import axios from "axios";
+import Toast from "react-native-toast-message";
+
+import baseUrl from "../../../common/baseurl";
+import AuthGlobal from "../../../../context/store/AuthGlobal";
 
 var { width } = Dimensions.get("window");
 
 const AppointmentScreen = ({ route }) => {
-  const [date, setDate] = useState(new Date());
+  const context = useContext(AuthGlobal);
+  const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [type, setType] = useState("");
 
   const navigation = useNavigation();
+  const doctor = route.params.item
+
 
   const checkOut = () => {
     let appointment = {
+      user: context.stateUser.user.userId,
+      doctor: route.params.item.id,
       date: date,
       time: time,
-      doctor: route.params.item.id.value,
       type: type,
     };
-    navigation.navigate("Appointment", {
-      screen: "Payment",
-      params: { appointment: appointment },
-    });
+
+    axios
+            .post(`${baseUrl}appointments/`, appointment)
+            .then((res) => {
+                if(res.status == 200) {
+                   
+                    Toast.show({
+                        topOffset: 60,
+                        type: "success",
+                        text1: "Booking Successful",
+                        text2: ""
+                    })
+
+                    setTimeout(() => {
+                        navigation.navigate("Schedule",{screen:"Completed",params:{doctor:doctor
+                        , appointment:appointment}});
+                    }, 500);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                Toast.show({
+                    topOffset: 60,
+                    type: "error",
+                    text1: "Something went wrong",
+                    text2: "Please try again"
+                })
+            })
+   
   };
 
   return (
@@ -46,8 +80,8 @@ const AppointmentScreen = ({ route }) => {
       <Text style={styles.text}>Choose the Date</Text>
       <DatePicker
         value={date}
-        onSelectedChange={(date) => setDate(date)}
-        mode="date"
+        onSelectedChange={selectedDate => setDate(selectedDate)}
+        mode="calendar"
         minimumDate={new Date()}
         maximumDate={new Date(2021, 12, 31)}
         style = {{borderRadius: 50}}
@@ -57,8 +91,7 @@ const AppointmentScreen = ({ route }) => {
       <DatePicker
         mode="time"
         minuteInterval={15}
-        value={time}
-        onSelectedChange={(time) => setTime(time)}
+        onTimeChange={selectedTime => setTime(selectedTime)}
         style = {{borderRadius: 50}}
       />
       <Text style={styles.text}>Choose the Type</Text>

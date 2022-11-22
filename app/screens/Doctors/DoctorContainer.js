@@ -16,7 +16,7 @@ const DoctorContainer = () => {
 
    useFocusEffect(
         React.useCallback(() => {
-            axios.get(`${baseUrl}doctors`)
+            axios.get(`${baseUrl}doctors/`)
             .then(res => {
                 setDoctors(res.data);
                 setLoading(false);
@@ -35,12 +35,9 @@ const DoctorContainer = () => {
           return <DoctorList item={item} />;
         }
         // filter of the title
-        if (item.name.first.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
+        if (item.name.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
           return <DoctorList item={item} />;
         }
-        if (item.name.last.toUpperCase().includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))) {
-            return <DoctorList item={item} />;
-          }
       };
 
   return (

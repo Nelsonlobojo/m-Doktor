@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Image,
   View,
@@ -9,11 +9,14 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
+import AuthGlobal from "../../../context/store/AuthGlobal";
+
+
+
 const SingleDoctor = (props) => {
+    const context = useContext(AuthGlobal);
     const navigation = useNavigation();
-    const [doctorItem, setDoctorItem] = useState(props.route.params.item);
-   
-    
+    const [doctorItem, setDoctorItem] = useState(props.route.params.item); 
     return (
         <View>
         <ScrollView style={{ marginBottom: 80, padding: 5 }}>
@@ -23,24 +26,31 @@ const SingleDoctor = (props) => {
                 source={{
                 uri: doctorItem.profilePicture
                     ? doctorItem.profilePicture
-                    : "https://picsum.photos/200/300",
+                    : "https://picsum.photos/id/1/200/300",
                 }}
                 resizeMethod="contain"
             />
             </View>
-            <View style={styles.contentContainer}>
-            <Text style={styles.name}>{doctorItem.name}</Text>
-            <Text style={styles.body}>{doctorItem.email}</Text>
-            <Text style={styles.body}>{doctorItem.speciality}</Text>
-            <Text style={styles.body}>{doctorItem.price}</Text>
-            <Text style={styles.body}>{doctorItem.phone}</Text>
-            <Text style={styles.username}>{doctorItem.bio}</Text>
+            <View style={styles.container}>
+            <Text style={styles.name}>Name:{doctorItem.name}</Text>
+            <Text style={styles.body}>Email:{doctorItem.email}</Text>
+            <Text style={styles.body}>Price:{doctorItem.price}</Text>
+            <Text style={styles.body}>Phone:{doctorItem.phone}</Text>
+            <Text style={styles.username}>Bio:{doctorItem.bio}</Text>
             </View>
         </ScrollView>
-        <View style={styles.bottomContainer}>
+        {context.stateUser.isAuthenticated ? (
+            <View style={styles.bottomContainer}>
             <Button onPress={() => navigation.navigate("Appointment",{screen:'Date/Time',
             params:{item:doctorItem}})} title="Consult" />
         </View>
+        ): (
+            <View style={styles.bottomContainer}>
+            <Button onPress={() => navigation.navigate("User",{screen:'UserLogin',
+            })} title="Login" />
+        </View>
+        )}
+        
         </View>
     );
 };

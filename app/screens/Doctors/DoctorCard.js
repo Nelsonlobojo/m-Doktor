@@ -4,34 +4,33 @@ import { StyleSheet, View, Dimensions, Image, Button, Text } from "react-native"
 var  {height,width} = Dimensions.get('window');
 
 const DoctorCard = (props) => {
-    const image = props.profilePicture;
     const name = props.name;
-    const email = props.email;
-    const speciality = props.speciality;
-    const price = props.price;
+    const image = props.profilePicture 
+    const email = props.email
+    const price = props.price.toString()
+
     
     return (
         <View style={styles.container}>
-            <Image source={{uri:image}}
+            <Image source={{
+                uri: image
+                    ? image
+                    : "https://picsum.photos/id/1/200/300",
+                }}
             style={styles.image} 
             resizeMethod="contain"
             />
             <View style={styles.card} />
             <Text style={styles.name}>
-                {name.length > 15 ? name.substring(0, 15-3) + "..." : name}
+                Dr:{name.length > 15 ? name.substring(0, 15-3) + "..." : name}
             </Text>
             <Text style={styles.body}>
-                {email.length > 15 ? email.substring(0, 15-3) + "..." : email}
+               Email:{email.length > 15 ? email.substring(0, 15-3) + "..." : email}
             </Text>
             <Text style={styles.body}>
-                {speciality.length > 15 ? speciality.substring(0, 15-3) + "..." : speciality}
+                Price:{price}
             </Text>
-            <Text style={styles.body}>
-                {price.length > 15 ? price.substring(0, 15-3) + "..." : price}
-            </Text>
-            <Button title="Book" color="#f194ff" />
-            <View>
-            </View>
+            <Button title="Book" color="blue" />
         </View>
     )
 };
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "grey",
         textAlign: "center",
-        left: 0,
+        left: 20,
     }
 });
 

@@ -13,8 +13,8 @@ function MyTabs()  {
     return(
         <Tab.Navigator>
             <Tab.Screen name="Date/Time" component={AppointmentScreen} />
-            <Tab.Screen name="Payment" component={Payment} />
-            <Tab.Screen name="Success" component={Confirm} />       
+           {/* <Tab.Screen name="Payment" component={Payment} />
+            <Tab.Screen name="Success" component={Confirm} /> */}   
         </Tab.Navigator>
     )
 }

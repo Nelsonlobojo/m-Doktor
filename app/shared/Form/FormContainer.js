@@ -6,7 +6,6 @@ var {width} = Dimensions.get('window');
 const FormContainer = (props) => {
     <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>{props.title}</Text>
-        {props.children}
     </ScrollView>
 }
 

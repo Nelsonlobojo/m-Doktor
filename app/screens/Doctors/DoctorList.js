@@ -7,7 +7,7 @@ var {width} = Dimensions.get('window');
 
 const DoctorList = (props) => {
     const navigation = useNavigation();
-    const {item} = props; 
+    const {item} = props;
 
     return (
         <TouchableOpacity style={{width: '50%'}} 
