@@ -28,16 +28,16 @@ const CompletedAppointment = () => {
   useFocusEffect(
     React.useCallback(() => {
       if (
-        context.stateUser.isAuthenticated === false ||
-        context.stateUser.isAuthenticated === null
+        context.stateDoctor.isAuthenticated === false ||
+        context.stateDoctor.isAuthenticated === null
       ) {
         navigation.navigate("Login");
       }
-      AsyncStorage.getItem("jwtToken")
+      AsyncStorage.getItem("jwt")
         .then((res) => {
           axios
             .get(
-              `${baseUrl}appointments/userappointments/pending/${context.stateUser.user.userId}`,
+              `${baseUrl}appointments/doctorappointments/pending/${context.stateDoctor.doctor.doctorId}`,
               {
                 headers: { Authorization: `Bearer ${res}` },
               }
@@ -53,11 +53,11 @@ const CompletedAppointment = () => {
       return () => {
         setAppointments([]);
       }
-    }, [context.stateUser.isAuthenticated])
+    }, [context.stateDoctor.isAuthenticated])
   )
 
   const deleteAppointment = (id) => {
-    AsyncStorage.getItem("jwtToken")
+    AsyncStorage.getItem("jwt")
       .then((res) => {
         axios
           .delete(`${baseUrl}appointments/${id}`, {

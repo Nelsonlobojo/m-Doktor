@@ -5,13 +5,13 @@ const Tab = createMaterialTopTabNavigator();
 
 // import Screens
 import AppointmentNavigator from "./AppointmentNavigator";
-import NewsNavigator from "./NewsNavigator";
+import UpcomingNavigator from "./UpcomingNavigator";
 
 function MyTabs() {
     return (
         <Tab.Navigator>
-        <Tab.Screen name="Completed" component={AppointmentNavigator} />
-        <Tab.Screen name="Pending" component={NewsNavigator} />
+        <Tab.Screen name="Upcoming" component={AppointmentNavigator} />
+        <Tab.Screen name="Completed" component={UpcomingNavigator} />
         </Tab.Navigator>
     );
 }

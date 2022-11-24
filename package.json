@@ -27,6 +27,7 @@
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
     "react-native-gesture-handler": "~2.5.0",
+    "react-native-gifted-chat": "^1.0.4",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-picker-select": "^8.0.4",

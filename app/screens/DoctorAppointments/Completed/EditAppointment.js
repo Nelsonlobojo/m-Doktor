@@ -44,7 +44,7 @@ const EditAppointmentScreen = ({ route }) => {
       date: date,
       time: time,
     };
-    AsyncStorage.getItem("jwtToken").then((res) => {
+    AsyncStorage.getItem("jwt").then((res) => {
       axios
             .put(`${baseUrl}appointments/${editAppointment._id}`, appointment, {
               headers: { Authorization: `Bearer ${res}` },

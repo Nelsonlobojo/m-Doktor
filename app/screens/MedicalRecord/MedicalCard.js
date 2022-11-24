@@ -3,31 +3,43 @@ import { StyleSheet, View, Dimensions, Image, Button, Text } from "react-native"
 
 var  {height,width} = Dimensions.get('window');
 
-const NewsItemCard = (props) => {
-    const {title, body} = props;
+const MedicalCard = (props) => {
+
+    const doctorName = props.doctor.name
+    const date= props.appointment.date
+    const newdate = date.split("T")[0]
+    const diagnosis = props.diagnosis 
+    const image= props.doctor.profilePicture
+
     return (
         <View style={styles.container}>
-            <Image source={{uri: 'https://picsum.photos/200/300'}} 
+             <Image source={{
+                uri: image
+                    ? image
+                    : "https://picsum.photos/id/1/200/300",
+                }}
             style={styles.image} 
             resizeMethod="contain"
             />
             <View style={styles.card} />
-            <Text style={styles.title}>
-                {title.length > 15 ? title.substring(0, 15-3) + "..." : title}
+            <Text style={styles.name}>
+                Dr: {doctorName}
             </Text>
             <Text style={styles.body}>
-                {body.length > 15 ? body.substring(0, 15-3) + "..." : body}
+                Appointment Date: {newdate}
             </Text>
-            <View>
-            </View>
+            <Text style={styles.body}>
+                Diagnosis: {diagnosis}
+            </Text>
+            <Button title="View" color="blue" />
         </View>
     )
-}
+};
 
 const styles = StyleSheet.create({
     container:{
         width: width - 20,
-        height: width/1.7, 
+        height: 100,
         padding: 10,
         borderRadius: 10,
         marginTop: 55,
@@ -38,40 +50,31 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     image:{
-        width: width/2 - 20 -10,
-        height: width/2 - 20 -30,
+        width: 100,
+        height: 100,
         backgroundColor: "transparent",
         position: "absolute",
-        top: 20,
         left: 10,
+        borderRadius: 100
     },
     card: {
-        marginBottom: 10,
-        height: width/2 - 20 -90,
+        height: 0,
         backgroundColor: "transparent",
-        width: width/2 -20 -10,
+        width: 100,
     },
-    title:{
-        flex: 1,
+    name:{
         fontSize: 16,
         fontWeight: "bold",
         color: "black",
         textAlign: "center",
-        left: 70,
+        left: 0,
     },
     body:{
-        flex: 1,
         fontSize: 14,
-        color: "black",
+        color: "grey",
         textAlign: "center",
-        marginBottom: 30,
-        left: 70,
-    },
-    price: {
-        fontSize: 20,
-        color: "blue",
-        marginTop: 10,
+        left: 20,
     }
-})
+});
 
-export default NewsItemCard;
+export default MedicalCard;

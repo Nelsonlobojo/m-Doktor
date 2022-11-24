@@ -11,13 +11,13 @@ import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 
-import CompletedAppointmentList from "./CompletedAppointmentList";
+import UpcomingAppointmentList from "./UpcomingAppointmentList";
 import SearchBar from "../../../shared/SearchBarTheme";
 import baseUrl from "../../../common/baseurl";
 
 import AuthGlobal from "../../../../context/store/AuthGlobal";
 
-const CompletedAppointment = () => {
+const UpcomingAppointment = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
   const [appointments, setAppointments] = useState([]);
@@ -37,7 +37,7 @@ const CompletedAppointment = () => {
         .then((res) => {
           axios
             .get(
-              `${baseUrl}appointments/userappointments/pending/${context.stateUser.user.userId}`,
+              `${baseUrl}appointments/userappointments/completed/${context.stateUser.user.userId}`,
               {
                 headers: { Authorization: `Bearer ${res}` },
               }
@@ -78,7 +78,7 @@ const CompletedAppointment = () => {
     // when no input, show all
     if (searchPhrase === "") {
       return (
-        <CompletedAppointmentList item={item} delete={deleteAppointment} />
+        <UpcomingAppointmentList item={item} delete={deleteAppointment} />
       );
     }
     // filter of the title
@@ -87,7 +87,7 @@ const CompletedAppointment = () => {
         .toUpperCase()
         .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ""))
     ) {
-      return <CompletedAppointmentList item={item} />;
+      return <UpcomingAppointmentList item={item} />;
     }
   };
 
@@ -126,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompletedAppointment;
+export default UpcomingAppointment;

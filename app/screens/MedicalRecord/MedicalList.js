@@ -2,25 +2,24 @@ import React from "react";
 import { TouchableOpacity, Dimensions, View} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-
-import NewsItemCard from "./NewsItemCard";
+import MedicalCard from "./MedicalCard";
 var {width} = Dimensions.get('window');
 
-const NewsItemList = (props) => {
+const MedicalList = (props) => {
     const navigation = useNavigation();
-    const {item} = props; 
+    const {item} = props;
 
     return (
         <TouchableOpacity style={{width: '50%'}} 
-            onPress={() => navigation.navigate("News Detail", {item: item})}
+            onPress={() => navigation.navigate("Medical Card", {item: item})}
             >
             <View style={{width: width, backgroundColor:'white'}}>
 
-                <NewsItemCard {...item} />
+                <MedicalCard {...item} />
 
             </View>
         </TouchableOpacity>
     )
 }
 
-export default NewsItemList;
+export default MedicalList;

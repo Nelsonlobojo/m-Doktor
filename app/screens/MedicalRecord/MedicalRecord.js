@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, StatusBar} from "react-native";
 
-import NewsItemContainer from './NewsContainer';
+import MedicalContainer from "./MedicalContainer";
 
-const NewsItemPage = () => {
+const MedicalRecord = () => {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#0682FE" />
-            <NewsItemContainer />
+            <MedicalContainer />
         </View>
     )
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NewsItemPage;
+export default MedicalRecord;

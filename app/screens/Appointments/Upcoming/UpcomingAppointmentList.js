@@ -1,15 +1,13 @@
 import React, {useState} from 'react'
 import { TouchableOpacity, Dimensions, View, Modal, Button, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EasyButton from "../../../shared/StyledComponents/EasyButton";
 
-import CompletedAppointmentCard from './CompletedAppointmentCard';
+import UpcomingAppointmentCard from './UpcomingAppointmentCard';
 var {  width } = Dimensions.get('window')
 
 
-const CompletedAppointmentList = (props) => {
-  const navigation = useNavigation();
+const UpcomingAppointmentList = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { item } = props;
 
@@ -38,28 +36,14 @@ const CompletedAppointmentList = (props) => {
               >
                 <Icon name="close" size={30} color="red" />
               </TouchableOpacity>
-              <EasyButton medium secondary
-                onPress={() => {[navigation.navigate("EditAppointment", {item: item}), 
-                setModalVisible(false)]}}
-              >
-                <Text style={{color: "white", fontWeight:"bold"}}>Edit</Text>
-              </EasyButton>
-              <EasyButton 
-              medium 
-              danger
-              onPress={() => [props.delete(item._id), setModalVisible(false)]}
-              >
-                <Text style={{color: "white", fontWeight:"bold"}}>Cancel</Text>
-              </EasyButton>
             </View>
         </View>
       </Modal>
     <TouchableOpacity style={{ width: '50%' }}
-      onPress={() => navigation.navigate('SingleAppointment', { item: item })}
       onLongPress={() => setModalVisible(true)}
     >
       <View style={{width:width, backgroundColor:"white"}}>
-        <CompletedAppointmentCard {...item} />
+        <UpcomingAppointmentCard {...item} />
       </View>
 
     </TouchableOpacity>
@@ -92,4 +76,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default CompletedAppointmentList
+export default UpcomingAppointmentList

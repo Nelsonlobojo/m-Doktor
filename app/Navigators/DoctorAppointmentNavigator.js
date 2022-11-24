@@ -1,11 +1,10 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import React from "react";
+import {createStackNavigator} from "@react-navigation/stack";
 
-
-import Completed from "../screens/Appointments/Completed/Completed";
-import SingleAppointment from "../screens/Appointments/Completed/SingleAppointment";
-import EditAppointment from '../screens/Appointments/Completed/EditAppointment';
-import AddReview from '../screens/Appointments/Completed/AddReview';
+import Completed from "../screens/DoctorAppointments/Completed/Completed";
+import SingleAppointment from "../screens/DoctorAppointments/Completed/SingleAppointment";
+import EditAppointment from '../screens/DoctorAppointments/Completed/EditAppointment';
+import AddMedical from '../screens/DoctorAppointments/Completed/AddMedical';
 
 const Stack = createStackNavigator();
 
@@ -29,8 +28,8 @@ function MyStack() {
             options={{ headerShown: false }}
         />
         <Stack.Screen
-            name="Add Review"
-            component={AddReview}
+            name="Add Medical"
+            component={AddMedical}
             options={{ headerShown: false }}
         />
         </Stack.Navigator>
@@ -38,6 +37,6 @@ function MyStack() {
     )
 }
 
-export default function AppointmentNavigator() {
+export default function DoctorAppointmentNavigator() {
     return <MyStack />
 }

@@ -7,14 +7,13 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import FormContainer from "../../../shared/Form/FormContainer";
-import Input from "../../../shared/Form/Input";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RNPickerSelect from "react-native-picker-select";
 import { useNavigation } from "@react-navigation/native";
 import DatePicker from "react-native-modern-datepicker";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import baseUrl from "../../../common/baseurl";
 import AuthGlobal from "../../../../context/store/AuthGlobal";
@@ -39,9 +38,11 @@ const AppointmentScreen = ({ route }) => {
       time: time,
       type: type,
     };
-
-    axios
-            .post(`${baseUrl}appointments/`, appointment)
+    AsyncStorage.getItem("jwtToken").then((res) => {
+      axios
+            .post(`${baseUrl}appointments/`, appointment, {
+              headers: { Authorization: `Bearer ${res}` },
+            })
             .then((res) => {
                 if(res.status == 200) {
                    
@@ -53,7 +54,7 @@ const AppointmentScreen = ({ route }) => {
                     })
 
                     setTimeout(() => {
-                        navigation.navigate("Schedule",{screen:"Completed",params:{doctor:doctor
+                        navigation.navigate("Schedule",{screen:"Upcoming",params:{doctor:doctor
                         , appointment:appointment}});
                     }, 500);
                 }
@@ -67,6 +68,8 @@ const AppointmentScreen = ({ route }) => {
                     text2: "Please try again"
                 })
             })
+    });
+    
    
   };
 
@@ -82,8 +85,8 @@ const AppointmentScreen = ({ route }) => {
         value={date}
         onSelectedChange={selectedDate => setDate(selectedDate)}
         mode="calendar"
-        minimumDate={new Date()}
-        maximumDate={new Date(2021, 12, 31)}
+        minimumDate={new Date().toISOString()}
+        maximumDate={new Date(2022, 31, 12).toISOString()}
         style = {{borderRadius: 50}}
         disableDateChange={true}
       />

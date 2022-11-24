@@ -6,10 +6,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import AuthGlobal from "../../context/store/AuthGlobal";
 
 // my Stacks
-import NewsNavigator from "./NewsNavigator";
 import HomeNavigator from "./HomeNavigator";
 import UserNavigator from "./UserNavigator";
 import Completed_PendingNavigator from "./Completed_Pending";
+import MedicalNavigator from "./MedicalNavigator";
+import DoctorCompletedPendingNavigator from "./DoctorCompletedPending";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,34 +34,37 @@ const Main = () => {
                 ]
             }}
         >
-            <Tab.Screen
-                name="Consult"
-                component={HomeNavigator}
-                options={{
-                    tabBarIcon: ({ color }) => (
-                        <Icon name="stethoscope"
-                        style = {{position: 'relative'}}
-                        color={color}
-                        size ={30} 
-                         />
-                    )
-                }}
-            />
-            {context.stateUser.isAuthenticated ? (
-                 <Tab.Screen
-                 name="Record"
-                 component={NewsNavigator}
-                 options={{
-                     tabBarIcon: ({ color }) => (
-                         <Icon name="id-card" 
-                         style = {{position: 'relative'}}
-                         color={color}
-                         size ={30} 
-                          />
-                     )
-                 }}
-             /> 
-            ): null}
+        {!context.stateDoctor.isAuthenticated  ? (
+             <Tab.Screen
+             name="Consult"
+             component={HomeNavigator}
+             options={{
+                 tabBarIcon: ({ color }) => (
+                     <Icon name="stethoscope"
+                     style = {{position: 'relative'}}
+                     color={color}
+                     size ={30} 
+                      />
+                 )
+             }}
+         />
+        ): null}
+           
+           {context.stateUser.isAuthenticated  ? (
+             <Tab.Screen
+             name="Record"
+             component={MedicalNavigator}
+             options={{
+                 tabBarIcon: ({ color }) => (
+                     <Icon name="id-card" 
+                     style = {{position: 'relative'}}
+                     color={color}
+                     size ={30} 
+                      />
+                 )
+             }}
+         /> ): null}
+                
             {context.stateUser.isAuthenticated ? (
                  <Tab.Screen
                  name="Schedule"
@@ -76,19 +80,23 @@ const Main = () => {
                  }}
              /> 
             ): null}
-            <Tab.Screen
-                name="News"
-                component={NewsNavigator}
-                options={{
-                    tabBarIcon: ({ color }) => (
-                        <Icon name="newspaper-o" 
-                        style = {{position: 'relative'}}
-                        color={color}
-                        size ={30} 
-                         />
-                    )
-                }}
-            />
+
+        {context.stateDoctor.isAuthenticated ? (
+                 <Tab.Screen
+                 name="Doctor Schedule"
+                 component={DoctorCompletedPendingNavigator}
+                 options={{
+                     tabBarIcon: ({ color }) => (
+                         <Icon name="calendar" 
+                         style = {{position: 'relative'}}
+                         color={color}
+                         size ={30} 
+                          />
+                     )
+                 }}
+             /> 
+            ): null}
+
             <Tab.Screen
                 name="User"
                 component={UserNavigator}

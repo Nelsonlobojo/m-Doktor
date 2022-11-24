@@ -1,9 +1,9 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 
-import NewsItemPage from "../screens/NewsItems/NewsItemPage";
+import MedicalRecord from '../screens/MedicalRecord/MedicalRecord';
 
-import SingleNewsItem from "../screens/NewsItems/SingleNewsItem";
+import SingleMedicalCard from '../screens/MedicalRecord/SingleMedicalCard';
 
 const Stack = createStackNavigator();
 
@@ -11,13 +11,13 @@ function MyStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen 
-                name="News Home"
-                component={NewsItemPage}
+                name="Medical Record"
+                component={MedicalRecord}
                 options = {{headerShown:false}}
             />
              <Stack.Screen 
-                name="News Detail"
-                component={SingleNewsItem}
+                name="Medical Card"
+                component={SingleMedicalCard}
                 options = {{headerShown:false}}
             />
         </Stack.Navigator>
@@ -25,6 +25,6 @@ function MyStack() {
     )
 }
 
-export default function NewsNavigator () {
+export default function MedicalNavigator () {
     return <MyStack />
-} 
+}

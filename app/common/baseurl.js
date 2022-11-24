@@ -5,8 +5,8 @@ import { Platform } from "react-native";
 // let baseUrl = ''
 
  {Platform.OS === 'android' ? 
-    baseUrl = 'https://781a-197-232-51-17.eu.ngrok.io/api/v1/' :
-    baseUrl = 'https://781a-197-232-51-17.eu.ngrok.io/api/v1/'
+    baseUrl = 'https://bf5e-197-232-51-17.in.ngrok.io/api/v1/' :
+    baseUrl = 'https://bf5e-197-232-51-17.in.ngrok.io/api/v1/'
 }
 
 export default baseUrl;

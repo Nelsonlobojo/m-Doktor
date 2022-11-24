@@ -10,6 +10,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 
+import axios from 'axios'
+import baseUrl from "../../../common/baseurl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
 const SingleAppointment = (props) => {
     const navigation = useNavigation();
     const [appointmentItem, setAppointmentItem] = useState(props.route.params.item);
@@ -17,7 +22,24 @@ const SingleAppointment = (props) => {
     const dateNow = new Date(date);
 
     const chat = () => {
-      navigation.navigate("Add Review")
+
+      let status = {
+        status: "Completed"
+      }
+       AsyncStorage.getItem("jwt")
+        .then((res) => {
+          axios
+            .put(
+              `${baseUrl}appointments/status/${appointmentItem._id}` ,status,
+              {
+                headers: { Authorization: `Bearer ${res}` },
+              }
+            )
+            .then((user) => {
+              navigation.navigate("Add Medical", { item: appointmentItem });
+            })
+            .catch((error) => console.log(error));
+        })
     }
 
   return(
@@ -27,19 +49,19 @@ const SingleAppointment = (props) => {
             <Image
               style={styles.image}
               source={{
-                uri: appointmentItem.doctor.profilePicture
-                  ? appointmentItem.doctor.profilePicture
+                uri: appointmentItem.user.profilePicture
+                  ? appointmentItem.user.profilePicture
                   : "https://picsum.photos/id/1/200/300",
               }}
               resizeMethod="contain"
             />
           </View>
           <View style={styles.container}>
-          <Text style={styles.name}>Dr {appointmentItem.doctor.name}</Text>
+          <Text style={styles.name}>Patient {appointmentItem.user.name}</Text>
             <Text style={styles.body}>Date: {dateNow.toDateString()}</Text>
             <Text style={styles.body}>Time: {appointmentItem.time}</Text>
-            <Text style={styles.body}>Email: {appointmentItem.doctor.email}</Text>
-            <Text style={styles.body}>Phone: {appointmentItem.doctor.phone}</Text>
+            <Text style={styles.body}>Email: {appointmentItem.user.email}</Text>
+            <Text style={styles.body}>Phone: {appointmentItem.user.phone}</Text>
           </View>
         </ScrollView>
         <View style={styles.bottomContainer}>
